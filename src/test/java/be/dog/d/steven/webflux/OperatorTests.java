@@ -10,4 +10,9 @@ public class OperatorTests {
                 .map(i -> i * 10)
                 .subscribe(System.out::println);
     }
+
+    @Test
+    void second() {
+
+    }
 }

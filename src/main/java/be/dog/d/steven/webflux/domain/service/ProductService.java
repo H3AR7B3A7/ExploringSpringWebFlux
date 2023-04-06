@@ -45,11 +45,11 @@ public class ProductService {
         return productRepository.findProductByProductId(productId)
                 .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found for id: " + productId)))
                 .flatMap(
-                p -> ratingRepository.findRatingsByProductId(p.id())
-                        .map(Rating::rating)
-                        .collectList()
-                        .map(ratings -> new ProductDto(p.productId(), p.name(), ratings))
-        );
+                        p -> ratingRepository.findRatingsByProductId(p.id())
+                                .map(Rating::rating)
+                                .collectList()
+                                .map(ratings -> new ProductDto(p.productId(), p.name(), ratings))
+                );
     }
 
     public Mono<ProductDto> save(CreateProductDto createProductDto) {

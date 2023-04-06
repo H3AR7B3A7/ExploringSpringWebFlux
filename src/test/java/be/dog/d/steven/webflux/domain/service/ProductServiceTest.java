@@ -36,7 +36,6 @@ public class ProductServiceTest {
 
     @Test
     void findAllWithRating() {
-        // Mock out the data returned by the repositories
         Product product1 = new Product(1L, "prod1", "Product 1");
         Product product2 = new Product(2L, "prod2", "Product 2");
         Rating rating1 = new Rating(1L, 1L, 4);
@@ -49,16 +48,13 @@ public class ProductServiceTest {
         when(ratingRepository.findRatingsByProductId(2L))
                 .thenReturn(Flux.just(rating3));
 
-        // Call the method under test
         Flux<ProductDto> result = productService.findAllWithRating();
 
-        // Verify the result
         StepVerifier.create(result)
                 .expectNext(new ProductDto("prod1", "Product 1", List.of(4, 5)))
                 .expectNext(new ProductDto("prod2", "Product 2", List.of(3)))
                 .verifyComplete();
 
-        // Verify that the repositories were called as expected
         verify(productRepository).findAll();
         verify(ratingRepository).findRatingsByProductId(1L);
         verify(ratingRepository).findRatingsByProductId(2L);
@@ -67,7 +63,6 @@ public class ProductServiceTest {
 
     @Test
     void findByIdWithRating_existingProduct() {
-        // Mock out the data returned by the repositories
         Product product = new Product(1L, "prod1", "Product 1");
         Rating rating1 = new Rating(1L, 1L, 4);
         Rating rating2 = new Rating(2L, 1L, 5);
@@ -76,15 +71,12 @@ public class ProductServiceTest {
         when(ratingRepository.findRatingsByProductId(1L))
                 .thenReturn(Flux.just(rating1, rating2));
 
-        // Call the method under test
         Mono<ProductDto> result = productService.findByIdWithRating("prod1");
 
-        // Verify the result
         StepVerifier.create(result)
                 .expectNext(new ProductDto("prod1", "Product 1", List.of(4, 5)))
                 .verifyComplete();
 
-        // Verify that the repositories were called as expected
         verify(productRepository).findProductByProductId("prod1");
         verify(ratingRepository).findRatingsByProductId(1L);
         verifyNoMoreInteractions(productRepository, ratingRepository);
@@ -92,31 +84,24 @@ public class ProductServiceTest {
 
     @Test
     void findByIdWithRating_missingProduct() {
-        // Mock out the data returned by the repositories
         when(productRepository.findProductByProductId("prod1"))
                 .thenReturn(Mono.empty());
 
-        // Call the method under test
         Mono<ProductDto> result = productService.findByIdWithRating("prod1");
 
-        // Verify the error
         StepVerifier.create(result)
                 .expectError(ProductNotFoundException.class)
                 .verify();
 
-        // Verify that the ratingRepository.findRatingsByProductId() method was NOT called
         verify(ratingRepository, never()).findRatingsByProductId(anyLong());
     }
 
     @Test
     void findAllWithRating_whenNoProductsExist() {
-        // given
         when(productRepository.findAll()).thenReturn(Flux.empty());
 
-        // when
         Flux<ProductDto> result = productService.findAllWithRating();
 
-        // then
         StepVerifier.create(result)
                 .verifyComplete();
         verify(productRepository).findAll();
@@ -125,14 +110,11 @@ public class ProductServiceTest {
 
     @Test
     void findByIdWithRating_nonExistingProduct() {
-        // given
         when(productRepository.findProductByProductId("non-existing-id"))
                 .thenReturn(Mono.empty());
 
-        // when
         Mono<ProductDto> result = productService.findByIdWithRating("non-existing-id");
 
-        // then
         StepVerifier.create(result)
                 .expectError(ProductNotFoundException.class)
                 .verify();
@@ -142,15 +124,12 @@ public class ProductServiceTest {
 
     @Test
     void saveProduct() {
-        // given
         ProductDto productDto = new ProductDto("prod1", "Product 1", List.of());
         when(productRepository.save(any(Product.class)))
                 .thenReturn(Mono.just(new Product(1L, "123", "Product 1")));
 
-        // when
         Mono<ProductDto> result = productService.save(productDto);
 
-        // then
         StepVerifier.create(result)
                 .expectNextMatches(p -> p.name().equals(productDto.name())
                         && p.productId().equals("123")

@@ -4,5 +4,4 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table
-public record Rating(@Id Long id, Long productId, Integer rating) {
-}
+public record Rating(@Id Long id, Long productId, Integer rating) { }

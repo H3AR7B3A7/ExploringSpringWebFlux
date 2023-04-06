@@ -1,5 +1,6 @@
 package be.dog.d.steven.webflux.domain.service;
 
+import be.dog.d.steven.webflux.adapter.CreateProductDto;
 import be.dog.d.steven.webflux.adapter.ProductDto;
 import be.dog.d.steven.webflux.adapter.RatingDto;
 import be.dog.d.steven.webflux.adapter.exception.ProductNotFoundException;
@@ -51,9 +52,9 @@ public class ProductService {
         );
     }
 
-    public Mono<ProductDto> save(ProductDto productDto) {
+    public Mono<ProductDto> save(CreateProductDto createProductDto) {
         return productRepository.save(
-                new Product(null, UUID.randomUUID().toString(), productDto.name())
+                new Product(null, UUID.randomUUID().toString(), createProductDto.name())
         ).map(p -> new ProductDto(p.productId(), p.name(), List.of()));
     }
 

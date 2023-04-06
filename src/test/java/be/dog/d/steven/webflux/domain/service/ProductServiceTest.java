@@ -1,5 +1,6 @@
 package be.dog.d.steven.webflux.domain.service;
 
+import be.dog.d.steven.webflux.adapter.CreateProductDto;
 import be.dog.d.steven.webflux.adapter.ProductDto;
 import be.dog.d.steven.webflux.adapter.exception.ProductNotFoundException;
 import be.dog.d.steven.webflux.domain.model.Product;
@@ -124,7 +125,7 @@ public class ProductServiceTest {
 
     @Test
     void saveProduct() {
-        ProductDto productDto = new ProductDto("prod1", "Product 1", List.of());
+        CreateProductDto productDto = new CreateProductDto("Product 1", List.of());
         when(productRepository.save(any(Product.class)))
                 .thenReturn(Mono.just(new Product(1L, "123", "Product 1")));
 

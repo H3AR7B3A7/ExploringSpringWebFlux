@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    Mono<ProductDto> save(@RequestBody ProductDto productDto) {
+    Mono<ProductDto> save(@RequestBody CreateProductDto productDto) {
         return productService.save(productDto);
     }
 

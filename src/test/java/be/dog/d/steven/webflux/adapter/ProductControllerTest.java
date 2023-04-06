@@ -66,7 +66,7 @@ class ProductControllerTest {
 
     @Test
     void saveProduct() {
-        ProductDto product = new ProductDto(null, "New Product", Arrays.asList(1, 2, 3));
+        CreateProductDto product = new CreateProductDto("New Product", Arrays.asList(1, 2, 3));
         given(productService.save(product)).willReturn(Mono.just(new ProductDto("1", "New Product", List.of())));
 
         FluxExchangeResult<ProductDto> result = webTestClient.post().uri("/api/v1/product")

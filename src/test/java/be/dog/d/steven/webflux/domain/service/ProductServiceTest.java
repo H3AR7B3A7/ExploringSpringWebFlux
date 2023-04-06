@@ -1,7 +1,7 @@
 package be.dog.d.steven.webflux.domain.service;
 
-import be.dog.d.steven.webflux.adapter.CreateProductDto;
-import be.dog.d.steven.webflux.adapter.ProductDto;
+import be.dog.d.steven.webflux.adapter.dto.CreateProductDto;
+import be.dog.d.steven.webflux.adapter.dto.ProductDto;
 import be.dog.d.steven.webflux.adapter.exception.ProductNotFoundException;
 import be.dog.d.steven.webflux.domain.model.Product;
 import be.dog.d.steven.webflux.domain.model.Rating;

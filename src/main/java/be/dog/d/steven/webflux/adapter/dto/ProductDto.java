@@ -1,4 +1,4 @@
-package be.dog.d.steven.webflux.adapter;
+package be.dog.d.steven.webflux.adapter.dto;
 
 import java.util.List;
 

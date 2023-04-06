@@ -1,5 +1,8 @@
 package be.dog.d.steven.webflux.adapter;
 
+import be.dog.d.steven.webflux.adapter.dto.CreateProductDto;
+import be.dog.d.steven.webflux.adapter.dto.ProductDto;
+import be.dog.d.steven.webflux.adapter.dto.RatingDto;
 import be.dog.d.steven.webflux.domain.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

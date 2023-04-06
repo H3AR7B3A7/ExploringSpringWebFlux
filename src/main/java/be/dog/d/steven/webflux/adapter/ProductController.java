@@ -17,9 +17,9 @@ public class ProductController {
         return productService.findAllWithRating();
     }
 
-    @GetMapping("/product/{id}")
-    Mono<ProductDto> findById(@PathVariable Long id) {
-        return productService.findByIdWithRating(id);
+    @GetMapping("/product/{productId}")
+    Mono<ProductDto> findById(@PathVariable String productId) {
+        return productService.findByIdWithRating(productId);
     }
 
     @PostMapping("/product")

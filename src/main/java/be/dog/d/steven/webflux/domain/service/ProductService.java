@@ -2,6 +2,7 @@ package be.dog.d.steven.webflux.domain.service;
 
 import be.dog.d.steven.webflux.adapter.ProductDto;
 import be.dog.d.steven.webflux.adapter.RatingDto;
+import be.dog.d.steven.webflux.adapter.exception.ProductNotFoundException;
 import be.dog.d.steven.webflux.domain.model.Product;
 import be.dog.d.steven.webflux.domain.model.Rating;
 import be.dog.d.steven.webflux.domain.repository.ProductRepository;
@@ -39,8 +40,10 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Mono<ProductDto> findByIdWithRating(Long id) {
-        return productRepository.findById(id).flatMap(
+    public Mono<ProductDto> findByIdWithRating(String productId) {
+        return productRepository.findProductByProductId(productId)
+                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found for id: " + productId)))
+                .flatMap(
                 p -> ratingRepository.findRatingsByProductId(p.id())
                         .map(Rating::rating)
                         .collectList()
@@ -56,6 +59,7 @@ public class ProductService {
 
     public Mono<RatingDto> save(RatingDto ratingDto) {
         return productRepository.findProductByProductId(ratingDto.productId())
+                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found for id: " + ratingDto.productId())))
                 .flatMap(p -> ratingRepository.save(new Rating(null, p.id(), ratingDto.rating()))
                         .map(r -> new RatingDto(p.productId(), r.rating()))
                 );

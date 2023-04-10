@@ -35,8 +35,18 @@ public class ProductController {
         return productService.save(ratingDto);
     }
 
-    @GetMapping("/blocking")
-    Mono<String> blocking() throws InterruptedException {
-        return Mono.just(productService.blockingCall());
+    @GetMapping("/blocking1")
+    Mono<String> blocking1() {
+        return productService.blockingCall1(); // BlockHound big MAD
+    }
+
+    @GetMapping("/blocking2")
+    Mono<String> blocking2() {
+        return productService.blockingCall2(); // BlockHound big MAD
+    }
+
+    @GetMapping("/blocking3")
+    Mono<String> blocking3() {
+        return productService.blockingCall3(); // BlockHound happy
     }
 }

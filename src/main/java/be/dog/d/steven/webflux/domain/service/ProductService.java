@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository productRepository;
     private final RatingRepository ratingRepository;
+
+    private final SomeBlockingService someBlockingService;
 
     public Flux<Product> findAll() {
         return productRepository.findAll().delayElements(Duration.ofSeconds(1));
@@ -66,8 +69,24 @@ public class ProductService {
                 );
     }
 
-    public String blockingCall() throws InterruptedException {
-        Thread.sleep(500);
-        return "Hello world";
+    // Imposter reactive method
+    // Blocking & Operators will give unexpected results
+    public Mono<String> blockingCall1() {
+        try {
+            return Mono.just(someBlockingService.blockingCall());
+        } catch (InterruptedException e) {
+            return Mono.error(e);
+        }
+    }
+
+    // Non-imposter reactive method
+    // Still blocking
+    public Mono<String> blockingCall2() {
+        return Mono.fromCallable(someBlockingService::blockingCall);
+    }
+
+    // Subscribing on the bounded elastic scheduler outside the event loop
+    public Mono<String> blockingCall3() {
+        return Mono.fromCallable(someBlockingService::blockingCall).subscribeOn(Schedulers.boundedElastic());
     }
 }

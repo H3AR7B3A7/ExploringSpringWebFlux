@@ -34,4 +34,9 @@ public class ProductController {
     Mono<RatingDto> save(@RequestBody RatingDto ratingDto) {
         return productService.save(ratingDto);
     }
+
+    @GetMapping("/blocking")
+    Mono<String> blocking() throws InterruptedException {
+        return Mono.just(productService.blockingCall());
+    }
 }

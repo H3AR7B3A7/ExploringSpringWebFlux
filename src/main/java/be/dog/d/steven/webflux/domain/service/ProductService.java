@@ -65,4 +65,9 @@ public class ProductService {
                         .map(r -> new RatingDto(p.productId(), r.rating()))
                 );
     }
+
+    public String blockingCall() throws InterruptedException {
+        Thread.sleep(500);
+        return "Hello world";
+    }
 }

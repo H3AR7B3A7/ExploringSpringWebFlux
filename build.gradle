@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.projectreactor:reactor-tools:3.5.4'
+    implementation 'io.projectreactor.tools:blockhound:1.0.8.RELEASE'
     compileOnly 'org.projectlombok:lombok'
     implementation 'com.h2database:h2'
     runtimeOnly 'io.r2dbc:r2dbc-h2'
@@ -34,4 +35,13 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('processAot') {
+    // JVM arg also required in project settings
+    // Generates some error about context propagation for micrometer:
+    // Cannot resolve type description for io.micrometer.context.ContextSnapshot$Scope
+    jvmArgs += [
+            "-XX:+AllowRedefinitionToAddDeleteMethods"
+    ]
 }

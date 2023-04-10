@@ -38,9 +38,10 @@ tasks.named('test') {
 }
 
 tasks.named('processAot') {
-    // JVM arg also required in project settings
-    // Generates some error about context propagation for micrometer:
-    // Cannot resolve type description for io.micrometer.context.ContextSnapshot$Scope
+    // WARNINGS:
+    // - This JVM arg is also required in project settings !!!
+    // - BlockHound generates some error about context propagation for micrometer:
+    //   Cannot resolve type description for io.micrometer.context.ContextSnapshot$Scope
     jvmArgs += [
             "-XX:+AllowRedefinitionToAddDeleteMethods"
     ]

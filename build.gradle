@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'io.projectreactor:reactor-tools:3.5.4'
     compileOnly 'org.projectlombok:lombok'
     implementation 'com.h2database:h2'
     runtimeOnly 'io.r2dbc:r2dbc-h2'

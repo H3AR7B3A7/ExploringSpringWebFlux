@@ -1,4 +1,4 @@
-package be.dog.d.steven.webflux.adapter;
+package be.dog.d.steven.webflux.adapter.controller;
 
 import be.dog.d.steven.webflux.adapter.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;

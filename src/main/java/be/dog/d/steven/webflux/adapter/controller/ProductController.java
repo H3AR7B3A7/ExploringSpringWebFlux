@@ -1,4 +1,4 @@
-package be.dog.d.steven.webflux.adapter;
+package be.dog.d.steven.webflux.adapter.controller;
 
 import be.dog.d.steven.webflux.adapter.dto.CreateProductDto;
 import be.dog.d.steven.webflux.adapter.dto.ProductDto;

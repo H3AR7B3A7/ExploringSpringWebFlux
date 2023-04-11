@@ -1,5 +1,6 @@
 package be.dog.d.steven.webflux.adapter;
 
+import be.dog.d.steven.webflux.adapter.controller.ProductController;
 import be.dog.d.steven.webflux.adapter.dto.CreateProductDto;
 import be.dog.d.steven.webflux.adapter.dto.ProductDto;
 import be.dog.d.steven.webflux.adapter.dto.RatingDto;

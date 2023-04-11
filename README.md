@@ -8,6 +8,8 @@ http://localhost:8080/api/v1/product/1
 
 http://localhost:8080/actuator
 
+http://localhost:8080/swagger-ui
+
 ## Bash
 
 ```bash
